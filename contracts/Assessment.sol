@@ -85,4 +85,14 @@ contract Assessment {
         return (depositCount[msg.sender], withdrawalCount[msg.sender]);
     }
 
+    function getUserLevel() public view returns (string memory) {
+        if (depositCount[msg.sender] < 2) {
+            return "Newbie";
+        } else if (depositCount[msg.sender] < 4) {
+            return "Adventurer";
+        } else {
+            return "Veteran";
+        }
+    }
+
 }

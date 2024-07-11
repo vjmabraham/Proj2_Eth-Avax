@@ -11,10 +11,18 @@ export default function HomePage() {
   const [treasureName, setTreasureName] = useState(undefined);
   const [depositCount, setDepositCount] = useState(undefined);
   const [withdrawalCount, setWithdrawalCount] = useState(undefined);
+  const [userLevel, setUserLevel] = useState(undefined);
 
 
   const contractAddress = "0x5FbDB2315678afecb367f032d93F642f64180aa3";
   const atmABI = atm_abi.abi;
+  
+  const getUserLevel = async() => {
+    if (atm) {
+      const userLevel = await atm.getUserLevel();
+      setUserLevel(userLevel);
+    }
+  }
 
   const generateRandomNumber = async() => {
     if (atm) {
@@ -127,6 +135,7 @@ export default function HomePage() {
 
     generateTreasureName();
     getTransactionCount();
+    getUserLevel();
 
     return (
       <div>
@@ -134,6 +143,7 @@ export default function HomePage() {
         <p>Your Balance: {balance}</p>
         <p>Deposits: {depositCount}</p>
         <p>Withdrawals: {withdrawalCount}</p>
+        <p>User Level: {userLevel}</p>
         <button onClick={deposit}>Deposit 1 ETH</button>
         <button onClick={withdraw}>Withdraw 1 ETH</button>
         <button onClick={generateRandomNumber}>Generate Lucky Number</button>
